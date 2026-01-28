@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roster | UAE Armed Forces</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Roster-specific styles */
+        .roster {
+            padding: 80px 0;
+            background-color: var(--uae-white);
+        }
+        
+        .roster h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--uae-dark);
+        }
+        
+        .rank-section {
+            margin-bottom: 60px;
+        }
+        
+        .rank-section h3 {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            color: var(--uae-green);
+            border-bottom: 2px solid var(--uae-green);
+            padding-bottom: 10px;
+        }
+        
+        .member-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .member-card {
+            background-color: var(--uae-light);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .member-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .member-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            background-color: var(--uae-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--uae-white);
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        
+        .member-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: var(--uae-dark);
+        }
+        
+        .member-rank {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 10px;
+        }
+        
+        .member-role {
+            font-size: 0.9rem;
+            color: var(--uae-green);
+            font-weight: 500;
+        }
+        
+        /* Rank Insignia */
+        .rank-insignia {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 10px;
+            background-color: var(--uae-dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--uae-white);
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        /* Filter Options */
+        .filter-options {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 10px 20px;
+            border: 1px solid var(--uae-green);
+            background-color: var(--uae-white);
+            color: var(--uae-green);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn.active {
+            background-color: var(--uae-green);
+            color: var(--uae-white);
+        }
+        
+        .filter-btn:hover {
+            background-color: var(--uae-green);
+            color: var(--uae-white);
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .member-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 20px;
+            }
+            
+            .roster h2 {
+                font-size: 2rem;
+            }
+            
+            .rank-section h3 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=UAE%20Armed%20Forces%20logo%20with%20eagle%20and%20national%20colors%20green%20white%20black%20red&image_size=square_hd" alt="UAE Armed Forces Logo" width="80" height="80">
+                <h1>UAE Armed Forces</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="roster.html" class="active">Roster</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="#" class="discord-btn">Join Discord</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Roster Section -->
+    <section class="roster">
+        <div class="container">
+            <h2>Unit Roster</h2>
+            
+            <!-- Filter Options -->
+            <div class="filter-options">
+                <button class="filter-btn active" data-filter="all">All Members</button>
+                <button class="filter-btn" data-filter="officers">Officers</button>
+                <button class="filter-btn" data-filter="enlisted">Enlisted</button>
+                <button class="filter-btn" data-filter="special-forces">Special Forces</button>
+            </div>
+
+            <!-- Command Structure -->
+            <div class="rank-section">
+                <h3>Command Structure</h3>
+                <div class="member-grid">
+                    <!-- Commander In Chief -->
+                    <div class="member-card" data-category="officers">
+                        <div class="member-avatar">CiC</div>
+                        <div class="rank-insignia">CiC</div>
+                        <div class="member-name">737-8M</div>
+                        <div class="member-rank">Commander In Chief</div>
+                        <div class="member-role">Overall Command</div>
+                    </div>
+                    
+                    <!-- Second-In-Command -->
+                    <div class="member-card" data-category="officers">
+                        <div class="member-avatar">2iC</div>
+                        <div class="rank-insignia">2iC</div>
+                        <div class="member-name">TarunBeast</div>
+                        <div class="member-rank">Second-In-Command</div>
+                        <div class="member-role">Executive Officer</div>
+                    </div>
+                    
+                    <!-- Third-In-Command -->
+                    <div class="member-card" data-category="officers">
+                        <div class="member-avatar">3iC</div>
+                        <div class="rank-insignia">3iC</div>
+                        <div class="member-name">SkyHunter007</div>
+                        <div class="member-rank">Third-In-Command</div>
+                        <div class="member-role">Operations Officer</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DA Ranked Members -->
+            <div class="rank-section">
+                <h3>DA Ranked Members</h3>
+                <div class="member-grid">
+                    <!-- DA-8 -->
+                    <div class="member-card" data-category="enlisted">
+                        <div class="member-avatar">DA</div>
+                        <div class="rank-insignia">8</div>
+                        <div class="member-name">Chicken</div>
+                        <div class="member-rank">DA-8</div>
+                        <div class="member-role">Pilot of the Month</div>
+                    </div>
+                    <div class="member-card" data-category="enlisted">
+                        <div class="member-avatar">DA</div>
+                        <div class="rank-insignia">8</div>
+                        <div class="member-name">Penguins</div>
+                        <div class="member-rank">DA-8</div>
+                        <div class="member-role">Member</div>
+                    </div>
+                    
+                    <!-- DA-9 -->
+                    <div class="member-card" data-category="enlisted">
+                        <div class="member-avatar">DA</div>
+                        <div class="rank-insignia">9</div>
+                        <div class="member-name">Condor</div>
+                        <div class="member-rank">DA-9</div>
+                        <div class="member-role">IVAO Member</div>
+                    </div>
+                    
+                    <!-- DA-7 -->
+                    <div class="member-card" data-category="enlisted">
+                        <div class="member-avatar">DA</div>
+                        <div class="rank-insignia">7</div>
+                        <div class="member-name">Raptor4...</div>
+                        <div class="member-rank">DA-7</div>
+                        <div class="member-role">LoA Member</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DM Ranked Members -->
+            <div class="rank-section">
+                <h3>DM Ranked Members</h3>
+                <div class="member-grid">
+                    <!-- DM-1 -->
+                    <div class="member-card" data-category="enlisted">
+                        <div class="member-avatar">DM</div>
+                        <div class="rank-insignia">1</div>
+                        <div class="member-name">Perez</div>
+                        <div class="member-rank">DM-1</div>
+                        <div class="member-role">SCP Member</div>
+                    </div>
+                    
+                    <!-- DM-2 -->
+                    <div class="member-card" data-category="enlisted">
+                        <div class="member-avatar">DM</div>
+                        <div class="rank-insignia">2</div>
+                        <div class="member-name">Big8...</div>
+                        <div class="member-rank">DM-2</div>
+                        <div class="member-role">GE Member</div>
+                    </div>
+                    <div class="member-card" data-category="enlisted">
+                        <div class="member-avatar">DM</div>
+                        <div class="rank-insignia">2</div>
+                        <div class="member-name">Havoc-4</div>
+                        <div class="member-rank">DM-2</div>
+                        <div class="member-role">RMA Member</div>
+                    </div>
+                    <div class="member-card" data-category="enlisted">
+                        <div class="member-avatar">DM</div>
+                        <div class="rank-insignia">2</div>
+                        <div class="member-name">IAFD1</div>
+                        <div class="member-rank">DM-2</div>
+                        <div class="member-role">Nerd</div>
+                    </div>
+                    <div class="member-card" data-category="enlisted">
+                        <div class="member-avatar">DM</div>
+                        <div class="rank-insignia">2</div>
+                        <div class="member-name">Shadow</div>
+                        <div class="member-rank">DM-2</div>
+                        <div class="member-role">FROG Member</div>
+                    </div>
+                    <div class="member-card" data-category="enlisted">
+                        <div class="member-avatar">DM</div>
+                        <div class="rank-insignia">2</div>
+                        <div class="member-name">Umbra</div>
+                        <div class="member-rank">DM-2</div>
+                        <div class="member-role">Wows Member</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- D Ranked Members -->
+            <div class="rank-section">
+                <h3>D Ranked Members</h3>
+                <div class="member-grid">
+                    <!-- D-3 -->
+                    <div class="member-card" data-category="enlisted">
+                        <div class="member-avatar">D</div>
+                        <div class="rank-insignia">3</div>
+                        <div class="member-name">Arnold</div>
+                        <div class="member-rank">D-3 (Dhabit-3)</div>
+                        <div class="member-role">GDL Member</div>
+                    </div>
+                    <div class="member-card" data-category="enlisted">
+                        <div class="member-avatar">D</div>
+                        <div class="rank-insignia">3</div>
+                        <div class="member-name">est</div>
+                        <div class="member-rank">D-3</div>
+                        <div class="member-role">Member</div>
+                    </div>
+                    
+                    <!-- D-6 -->
+                    <div class="member-card" data-category="enlisted">
+                        <div class="member-avatar">D</div>
+                        <div class="rank-insignia">6</div>
+                        <div class="member-name">Firmino</div>
+                        <div class="member-rank">D-6</div>
+                        <div class="member-role">Member</div>
+                    </div>
+                    <div class="member-card" data-category="enlisted">
+                        <div class="member-avatar">D</div>
+                        <div class="rank-insignia">6</div>
+                        <div class="member-name">MrSoulmelon</div>
+                        <div class="member-rank">D-6</div>
+                        <div class="member-role">Member</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- M Ranked Members -->
+            <div class="rank-section">
+                <h3>M Ranked Members</h3>
+                <div class="member-grid">
+                    <!-- M-1 -->
+                    <div class="member-card" data-category="enlisted">
+                        <div class="member-avatar">M</div>
+                        <div class="rank-insignia">1</div>
+                        <div class="member-name">Olamedia</div>
+                        <div class="member-rank">M-1 (Mujannad-1)</div>
+                        <div class="member-role">FORT Member</div>
+                    </div>
+                    <div class="member-card" data-category="enlisted">
+                        <div class="member-avatar">M</div>
+                        <div class="rank-insignia">1</div>
+                        <div class="member-name">Anon</div>
+                        <div class="member-rank">M-1</div>
+                        <div class="member-role">Mace Member</div>
+                    </div>
+                    <div class="member-card" data-category="enlisted">
+                        <div class="member-avatar">M</div>
+                        <div class="rank-insignia">1</div>
+                        <div class="member-name">ballistic_yt</div>
+                        <div class="member-rank">M-1</div>
+                        <div class="member-role">Member</div>
+                    </div>
+                    <div class="member-card" data-category="enlisted">
+                        <div class="member-avatar">M</div>
+                        <div class="rank-insignia">1</div>
+                        <div class="member-name">dinglenut</div>
+                        <div class="member-rank">M-1</div>
+                        <div class="member-role">SM64 Member</div>
+                    </div>
+                    <div class="member-card" data-category="enlisted">
+                        <div class="member-avatar">M</div>
+                        <div class="rank-insignia">1</div>
+                        <div class="member-name">Flanker-E</div>
+                        <div class="member-rank">M-1</div>
+                        <div class="member-role">DCS Member</div>
+                    </div>
+                    <div class="member-card" data-category="enlisted">
+                        <div class="member-avatar">M</div>
+                        <div class="rank-insignia">1</div>
+                        <div class="member-name">gab_gtrd</div>
+                        <div class="member-rank">M-1</div>
+                        <div class="member-role">OUAH Member</div>
+                    </div>
+                    <div class="member-card" data-category="enlisted">
+                        <div class="member-avatar">M</div>
+                        <div class="rank-insignia">1</div>
+                        <div class="member-name">Gamer</div>
+                        <div class="member-rank">M-1</div>
+                        <div class="member-role">Member</div>
+                    </div>
+                    <div class="member-card" data-category="enlisted">
+                        <div class="member-avatar">M</div>
+                        <div class="rank-insignia">1</div>
+                        <div class="member-name">GFC</div>
+                        <div class="member-rank">M-1</div>
+                        <div class="member-role">Member</div>
+                    </div>
+                    <div class="member-card" data-category="enlisted">
+                        <div class="member-avatar">M</div>
+                        <div class="rank-insignia">1</div>
+                        <div class="member-name">Kallama King</div>
+                        <div class="member-rank">M-1</div>
+                        <div class="member-role">Member</div>
+                    </div>
+                    <div class="member-card" data-category="enlisted">
+                        <div class="member-avatar">M</div>
+                        <div class="rank-insignia">1</div>
+                        <div class="member-name">Lettuce</div>
+                        <div class="member-rank">M-1</div>
+                        <div class="member-role">Member</div>
+                    </div>
+                    
+                    <!-- M-2 -->
+                    <div class="member-card" data-category="enlisted">
+                        <div class="member-avatar">M</div>
+                        <div class="rank-insignia">2</div>
+                        <div class="member-name">luckyhippo</div>
+                        <div class="member-rank">M-2 (Mujannad-2)</div>
+                        <div class="member-role">CX国泰 Member</div>
+                    </div>
+                    <div class="member-card" data-category="enlisted">
+                        <div class="member-avatar">M</div>
+                        <div class="rank-insignia">2</div>
+                        <div class="member-name">murdered</div>
+                        <div class="member-rank">M-2</div>
+                        <div class="member-role">Member</div>
+                    </div>
+                    <div class="member-card" data-category="enlisted">
+                        <div class="member-avatar">M</div>
+                        <div class="rank-insignia">2</div>
+                        <div class="member-name">MRP Avgeek</div>
+                        <div class="member-rank">M-2</div>
+                        <div class="member-role">ICAO Member</div>
+                    </div>
+                    <div class="member-card" data-category="enlisted">
+                        <div class="member-avatar">M</div>
+                        <div class="rank-insignia">2</div>
+                        <div class="member-name">voided</div>
+                        <div class="member-rank">M-2</div>
+                        <div class="member-role">MATH Member</div>
+                    </div>
+                    
+                    <!-- M-4 -->
+                    <div class="member-card" data-category="enlisted">
+                        <div class="member-avatar">M</div>
+                        <div class="rank-insignia">4</div>
+                        <div class="member-name">BorecPepik</div>
+                        <div class="member-rank">M-4</div>
+                        <div class="member-role">Member</div>
+                    </div>
+                    <div class="member-card" data-category="enlisted">
+                        <div class="member-avatar">M</div>
+                        <div class="rank-insignia">4</div>
+                        <div class="member-name">no</div>
+                        <div class="member-rank">M-4</div>
+                        <div class="member-role">DANK Member</div>
+                    </div>
+                    
+                    <!-- M-6 -->
+                    <div class="member-card" data-category="enlisted">
+                        <div class="member-avatar">M</div>
+                        <div class="rank-insignia">6</div>
+                        <div class="member-name">PLEN13</div>
+                        <div class="member-rank">M-6</div>
+                        <div class="member-role">Member</div>
+                    </div>
+                    
+                    <!-- M-8 -->
+                    <div class="member-card" data-category="enlisted">
+                        <div class="member-avatar">M</div>
+                        <div class="rank-insignia">8</div>
+                        <div class="member-name">Hunter</div>
+                        <div class="member-rank">M-8 (Mujannad-8)</div>
+                        <div class="member-role">Member</div>
+                    </div>
+                    <div class="member-card" data-category="enlisted">
+                        <div class="member-avatar">M</div>
+                        <div class="rank-insignia">8</div>
+                        <div class="member-name">itz_da_pr0478</div>
+                        <div class="member-rank">M-8</div>
+                        <div class="member-role">Member</div>
+                    </div>
+                    <div class="member-card" data-category="enlisted">
+                        <div class="member-avatar">M</div>
+                        <div class="rank-insignia">8</div>
+                        <div class="member-name">The Assassin</div>
+                        <div class="member-rank">M-8</div>
+                        <div class="member-role">Member</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bots -->
+            <div class="rank-section">
+                <h3>Bots</h3>
+                <div class="member-grid">
+                    <div class="member-card" data-category="special-forces">
+                        <div class="member-avatar">B</div>
+                        <div class="rank-insignia">BOT</div>
+                        <div class="member-name">Emirates NBD</div>
+                        <div class="member-rank">Bot</div>
+                        <div class="member-role">Financial Bot</div>
+                    </div>
+                    <div class="member-card" data-category="special-forces">
+                        <div class="member-avatar">B</div>
+                        <div class="rank-insignia">BOT</div>
+                        <div class="member-name">Hade</div>
+                        <div class="member-rank">Bot</div>
+                        <div class="member-role">Help Bot</div>
+                    </div>
+                    <div class="member-card" data-category="special-forces">
+                        <div class="member-avatar">B</div>
+                        <div class="rank-insignia">BOT</div>
+                        <div class="member-name">Make it a Quote</div>
+                        <div class="member-rank">Bot</div>
+                        <div class="member-role">Quote Bot</div>
+                    </div>
+                    <div class="member-card" data-category="special-forces">
+                        <div class="member-avatar">B</div>
+                        <div class="rank-insignia">BOT</div>
+                        <div class="member-name">Rythm</div>
+                        <div class="member-rank">Bot</div>
+                        <div class="member-role">Music Bot</div>
+                    </div>
+                    <div class="member-card" data-category="special-forces">
+                        <div class="member-avatar">B</div>
+                        <div class="rank-insignia">BOT</div>
+                        <div class="member-name">UAEAF Dyno</div>
+                        <div class="member-rank">Bot</div>
+                        <div class="member-role">Moderation Bot</div>
+                    </div>
+                    <div class="member-card" data-category="special-forces">
+                        <div class="member-avatar">B</div>
+                        <div class="rank-insignia">BOT</div>
+                        <div class="member-name">UAEAF Purge</div>
+                        <div class="member-rank">Bot</div>
+                        <div class="member-role">Purge Bot</div>
+                    </div>
+                    <div class="member-card" data-category="special-forces">
+                        <div class="member-avatar">B</div>
+                        <div class="rank-insignia">BOT</div>
+                        <div class="member-name">UAEAF EWC</div>
+                        <div class="member-rank">Bot</div>
+                        <div class="member-role">EWC Bot</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=UAE%20Armed%20Forces%20logo%20with%20eagle%20and%20national%20colors%20green%20white%20black%20red&image_size=square_hd" alt="UAE Armed Forces Logo" width="60" height="60">
+                    <h3>UAE Armed Forces</h3>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="roster.html">Roster</a></li>
+                        <li><a href="events.html">Events</a></li>
+                        <li><a href="about.html">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p>Join our Discord server for more information</p>
+                    <a href="#" class="discord-btn">Discord Server</a>
+                    <div class="discord-status"></div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 UAE Armed Forces Virtual Unit. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/script.js"></script>
+    <script>
+        // Filter Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const memberCards = document.querySelectorAll('.member-card');
+            
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    const filter = this.getAttribute('data-filter');
+                    
+                    // Filter member cards
+                    memberCards.forEach(card => {
+                        if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

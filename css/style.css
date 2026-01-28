@@ -1,0 +1,548 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f4;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* UAE National Colors */
+:root {
+    --uae-green: #009639;
+    --uae-white: #ffffff;
+    --uae-black: #000000;
+    --uae-red: #d80027;
+    --uae-dark: #1a1a1a;
+    --uae-light: #f4f4f4;
+}
+
+/* Header */
+header {
+    background-color: var(--uae-dark);
+    color: var(--uae-white);
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo h1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+nav ul li a {
+    color: var(--uae-white);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: var(--uae-green);
+}
+
+.discord-btn {
+    background-color: #7289da;
+    color: var(--uae-white);
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.discord-btn:hover {
+    background-color: #5a6fb7;
+    color: var(--uae-white);
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Hero Section */
+.hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=UAE%20military%20jet%20fighter%20flying%20over%20desert%20landscape%20at%20sunset%20with%20mountains%20in%20background&image_size=landscape_16_9');
+    background-size: cover;
+    background-position: center;
+    color: var(--uae-white);
+    padding: 120px 0;
+    text-align: center;
+}
+
+.hero h2 {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+    opacity: 0.9;
+}
+
+.hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 30px;
+    border-radius: 4px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn.primary {
+    background-color: var(--uae-green);
+    color: var(--uae-white);
+}
+
+.btn.primary:hover {
+    background-color: #007a2d;
+    transform: translateY(-2px);
+}
+
+.btn.secondary {
+    background-color: transparent;
+    color: var(--uae-white);
+    border: 2px solid var(--uae-white);
+}
+
+.btn.secondary:hover {
+    background-color: var(--uae-white);
+    color: var(--uae-dark);
+}
+
+.btn.small {
+    padding: 8px 20px;
+    font-size: 0.9rem;
+}
+
+/* About Section */
+.about {
+    padding: 80px 0;
+    background-color: var(--uae-white);
+}
+
+.about h2 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--uae-dark);
+}
+
+.about p {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 40px;
+    font-size: 1.1rem;
+    color: #555;
+}
+
+.stats {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-item h3 {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.stat-item p {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--uae-green);
+    margin: 0;
+}
+
+/* Features Section */
+.features {
+    padding: 80px 0;
+    background-color: var(--uae-light);
+}
+
+.features h2 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 50px;
+    color: var(--uae-dark);
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+}
+
+.feature-item {
+    background-color: var(--uae-white);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.feature-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.feature-item h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: var(--uae-dark);
+}
+
+.feature-item p {
+    color: #555;
+    line-height: 1.6;
+}
+
+/* Events Section */
+.events {
+    padding: 80px 0;
+    background-color: var(--uae-white);
+}
+
+.events h2 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 50px;
+    color: var(--uae-dark);
+}
+
+.event-list {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.event-item {
+    display: flex;
+    background-color: var(--uae-light);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.event-date {
+    background-color: var(--uae-green);
+    color: var(--uae-white);
+    padding: 20px;
+    text-align: center;
+    min-width: 100px;
+}
+
+.event-date .day {
+    font-size: 2rem;
+    font-weight: bold;
+    display: block;
+}
+
+.event-date .month {
+    font-size: 1rem;
+    text-transform: uppercase;
+}
+
+.event-details {
+    padding: 20px;
+    flex: 1;
+}
+
+.event-details h3 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    color: var(--uae-dark);
+}
+
+.event-details p {
+    color: #555;
+    margin-bottom: 15px;
+}
+
+/* Footer */
+footer {
+    background-color: var(--uae-dark);
+    color: var(--uae-white);
+    padding: 60px 0 30px;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.footer-logo h3 {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.footer-links h4,
+.footer-contact h4 {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    color: var(--uae-green);
+}
+
+.footer-links ul {
+    list-style: none;
+}
+
+.footer-links ul li {
+    margin-bottom: 10px;
+}
+
+.footer-links ul li a {
+    color: #ccc;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links ul li a:hover {
+    color: var(--uae-green);
+}
+
+.footer-contact p {
+    margin-bottom: 20px;
+    color: #ccc;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 30px;
+    border-top: 1px solid #333;
+    color: #ccc;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header .container {
+        flex-direction: column;
+        gap: 20px;
+        padding: 10px;
+    }
+
+    nav ul {
+        gap: 20px;
+    }
+
+    .hero h2 {
+        font-size: 2.5rem;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .stats {
+        gap: 40px;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .footer-links,
+    .footer-contact {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero h2 {
+        font-size: 2rem;
+    }
+
+    .about h2,
+    .features h2,
+    .events h2 {
+        font-size: 2rem;
+    }
+
+    .event-item {
+        flex-direction: column;
+    }
+
+    .event-date {
+        width: 100%;
+        padding: 15px;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.about,
+.features,
+.events {
+    animation: fadeIn 1s ease-out;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--uae-green);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #007a2d;
+}
+
+/* Discord Status Indicator */
+.discord-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: rgba(114, 137, 218, 0.1);
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.status-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.status-indicator.online {
+    background-color: #43b581;
+}
+
+.status-indicator.offline {
+    background-color: #747f8d;
+}
+
+/* Discord Embed Preview */
+.discord-embed-preview {
+    background-color: #36393f;
+    border-radius: 8px;
+    padding: 15px;
+    width: 300px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    color: #ffffff;
+    font-family: 'Arial', sans-serif;
+}
+
+.embed-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.embed-header img {
+    border-radius: 50%;
+}
+
+.embed-body p {
+    margin: 0;
+    color: #dcddde;
+    font-size: 0.9rem;
+}
+
+/* Discord Button Hover Effects */
+.discord-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.discord-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.discord-btn:hover::before {
+    left: 100%;
+}
