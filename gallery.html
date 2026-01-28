@@ -8,4 +8,410 @@
     <style>
         /* Gallery-specific styles */
         .gallery {
-            padding: 80px 0
+            padding: 80px 0;
+            background-color: var(--uae-white);
+        }
+        
+        .gallery h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--uae-dark);
+        }
+        
+        .gallery-filters {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 10px 20px;
+            border: 1px solid var(--uae-green);
+            background-color: var(--uae-white);
+            color: var(--uae-green);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn.active {
+            background-color: var(--uae-green);
+            color: var(--uae-white);
+        }
+        
+        .filter-btn:hover {
+            background-color: var(--uae-green);
+            color: var(--uae-white);
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .gallery-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        .gallery-item-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: var(--uae-white);
+            padding: 20px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover .gallery-item-info {
+            transform: translateY(0);
+        }
+        
+        .gallery-item-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .gallery-item-category {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        /* Lightbox Styles */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .lightbox.active {
+            display: flex;
+        }
+        
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+        }
+        
+        .lightbox img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: var(--uae-white);
+            font-size: 2rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .lightbox-close:hover {
+            color: var(--uae-green);
+        }
+        
+        .lightbox-caption {
+            position: absolute;
+            bottom: -40px;
+            left: 0;
+            color: var(--uae-white);
+            font-size: 1rem;
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .gallery h2 {
+                font-size: 2rem;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 20px;
+            }
+            
+            .gallery-filters {
+                gap: 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .gallery-item img {
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=UAE%20Armed%20Forces%20logo%20with%20eagle%20and%20national%20colors%20green%20white%20black%20red&image_size=square_hd" alt="UAE Armed Forces Logo" width="80" height="80">
+                <h1>UAE Armed Forces</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="roster.html">Roster</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="gallery.html" class="active">Gallery</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="#" class="discord-btn">Join Discord</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Gallery Section -->
+    <section class="gallery">
+        <div class="container">
+            <h2>Unit Gallery</h2>
+            
+            <!-- Gallery Filters -->
+            <div class="gallery-filters">
+                <button class="filter-btn active" data-filter="all">All Photos</button>
+                <button class="filter-btn" data-filter="operations">Operations</button>
+                <button class="filter-btn" data-filter="training">Training</button>
+                <button class="filter-btn" data-filter="social">Social Events</button>
+                <button class="filter-btn" data-filter="aircraft">Aircraft</button>
+            </div>
+
+            <!-- Gallery Grid -->
+            <div class="gallery-grid">
+                <!-- Operation Photos -->
+                <div class="gallery-item" data-category="operations">
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=UAE%20military%20operation%20in%20desert%20with%20soldiers%20in%20combat%20gear%20patrolling&image_size=landscape_16_9" alt="Desert Patrol">
+                    <div class="gallery-item-info">
+                        <div class="gallery-item-title">Desert Patrol Operation</div>
+                        <div class="gallery-item-category">Operations</div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item" data-category="operations">
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=UAE%20special%20forces%20conducting%20night%20operation%20with%20night%20vision%20gear&image_size=landscape_16_9" alt="Night Operation">
+                    <div class="gallery-item-info">
+                        <div class="gallery-item-title">Night Special Operations</div>
+                        <div class="gallery-item-category">Operations</div>
+                    </div>
+                </div>
+                
+                <!-- Training Photos -->
+                <div class="gallery-item" data-category="training">
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=UAE%20soldiers%20conducting%20weapons%20training%20on%20firing%20range&image_size=landscape_16_9" alt="Weapons Training">
+                    <div class="gallery-item-info">
+                        <div class="gallery-item-title">Weapons Training</div>
+                        <div class="gallery-item-category">Training</div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item" data-category="training">
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=UAE%20military%20training%20exercise%20with%20soldiers%20in%20urban%20combat%20scenario&image_size=landscape_16_9" alt="Urban Combat Training">
+                    <div class="gallery-item-info">
+                        <div class="gallery-item-title">Urban Combat Training</div>
+                        <div class="gallery-item-category">Training</div>
+                    </div>
+                </div>
+                
+                <!-- Social Events -->
+                <div class="gallery-item" data-category="social">
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=UAE%20military%20unit%20social%20event%20with%20soldiers%20in%20uniform%20celebrating&image_size=landscape_16_9" alt="Unit Celebration">
+                    <div class="gallery-item-info">
+                        <div class="gallery-item-title">Unit Celebration</div>
+                        <div class="gallery-item-category">Social Events</div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item" data-category="social">
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=UAE%20military%20graduation%20ceremony%20with%20soldiers%20receiving%20awards&image_size=landscape_16_9" alt="Graduation Ceremony">
+                    <div class="gallery-item-info">
+                        <div class="gallery-item-title">Basic Training Graduation</div>
+                        <div class="gallery-item-category">Social Events</div>
+                    </div>
+                </div>
+                
+                <!-- Aircraft Photos -->
+                <div class="gallery-item" data-category="aircraft">
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=UAE%20Air%20Force%20F-16%20fighter%20jet%20taking%20off%20from%20airbase&image_size=landscape_16_9" alt="F-16 Takeoff">
+                    <div class="gallery-item-info">
+                        <div class="gallery-item-title">F-16 Fighter Jet</div>
+                        <div class="gallery-item-category">Aircraft</div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item" data-category="aircraft">
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=UAE%20military%20helicopter%20flying%20over%20desert%20landscape&image_size=landscape_16_9" alt="Helicopter Patrol">
+                    <div class="gallery-item-info">
+                        <div class="gallery-item-title">Helicopter Patrol</div>
+                        <div class="gallery-item-category">Aircraft</div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item" data-category="aircraft">
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=UAE%20Air%20Force%20Rafale%20fighter%20jet%20in%20flight%20with%20afterburner&image_size=landscape_16_9" alt="Rafale Fighter">
+                    <div class="gallery-item-info">
+                        <div class="gallery-item-title">Rafale Fighter Jet</div>
+                        <div class="gallery-item-category">Aircraft</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div class="lightbox">
+        <div class="lightbox-content">
+            <img src="" alt="Lightbox Image">
+            <span class="lightbox-close">&times;</span>
+            <div class="lightbox-caption"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=UAE%20Armed%20Forces%20logo%20with%20eagle%20and%20national%20colors%20green%20white%20black%20red&image_size=square_hd" alt="UAE Armed Forces Logo" width="60" height="60">
+                    <h3>UAE Armed Forces</h3>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="roster.html">Roster</a></li>
+                        <li><a href="events.html">Events</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="about.html">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p>Join our Discord server for more information</p>
+                    <a href="#" class="discord-btn">Discord Server</a>
+                    <div class="discord-status"></div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 UAE Armed Forces Virtual Unit. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/script.js"></script>
+    <script>
+        // Gallery Filter Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            const lightbox = document.querySelector('.lightbox');
+            const lightboxImg = lightbox.querySelector('img');
+            const lightboxCaption = lightbox.querySelector('.lightbox-caption');
+            const lightboxClose = lightbox.querySelector('.lightbox-close');
+            
+            // Filter functionality
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    const filter = this.getAttribute('data-filter');
+                    
+                    // Filter gallery items
+                    galleryItems.forEach(item => {
+                        if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // Lightbox functionality
+            galleryItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const img = this.querySelector('img');
+                    const title = this.querySelector('.gallery-item-title').textContent;
+                    
+                    lightboxImg.src = img.src;
+                    lightboxImg.alt = title;
+                    lightboxCaption.textContent = title;
+                    lightbox.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+            
+            // Close lightbox
+            lightboxClose.addEventListener('click', function() {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+            
+            // Close lightbox when clicking outside
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox) {
+                    lightbox.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+            
+            // Close lightbox with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                    lightbox.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
