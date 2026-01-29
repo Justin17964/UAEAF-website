@@ -357,6 +357,228 @@ function handleImageErrors() {
 // Call the function to handle image errors
 handleImageErrors();
 
+// Authentication Functionality
+function initAuth() {
+    // Tab Switching
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const authTabs = document.querySelectorAll('.auth-tab');
+    const switchTabs = document.querySelectorAll('.switch-tab');
+    
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const tabId = this.dataset.tab;
+            
+            // Remove active class from all tabs and buttons
+            tabBtns.forEach(b => b.classList.remove('active'));
+            authTabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Add active class to current tab and button
+            this.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        });
+    });
+    
+    switchTabs.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetTab = this.dataset.target;
+            
+            // Remove active class from all tabs and buttons
+            tabBtns.forEach(b => b.classList.remove('active'));
+            authTabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Add active class to target tab and button
+            document.querySelector(`.tab-btn[data-tab="${targetTab}"]`).classList.add('active');
+            document.getElementById(targetTab).classList.add('active');
+        });
+    });
+    
+    // Login Form Handling
+    const loginForm = document.getElementById('login-form');
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const rememberMe = document.getElementById('remember-me').checked;
+            
+            // Get users from local storage
+            const users = JSON.parse(localStorage.getItem('uaeaf_users') || '[]');
+            
+            // Find user
+            const user = users.find(u => u.email === email && u.password === password);
+            
+            if (user) {
+                // Save user session
+                const session = {
+                    userId: user.id,
+                    email: user.email,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    role: user.role,
+                    discord: user.discord
+                };
+                
+                if (rememberMe) {
+                    localStorage.setItem('uaeaf_session', JSON.stringify(session));
+                } else {
+                    sessionStorage.setItem('uaeaf_session', JSON.stringify(session));
+                }
+                
+                // Show success message
+                showAuthMessage('Login successful! Redirecting...', 'success');
+                
+                // Redirect to home page
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1500);
+            } else {
+                showAuthMessage('Invalid email or password', 'error');
+            }
+        });
+    }
+    
+    // Register Form Handling
+    const registerForm = document.getElementById('register-form');
+    if (registerForm) {
+        registerForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const firstName = document.getElementById('register-firstname').value;
+            const lastName = document.getElementById('register-lastname').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const confirmPassword = document.getElementById('register-confirm-password').value;
+            const discord = document.getElementById('register-discord').value;
+            const role = document.getElementById('register-role').value;
+            
+            // Validate passwords
+            if (password !== confirmPassword) {
+                showAuthMessage('Passwords do not match', 'error');
+                return;
+            }
+            
+            // Get users from local storage
+            const users = JSON.parse(localStorage.getItem('uaeaf_users') || '[]');
+            
+            // Check if user already exists
+            if (users.some(u => u.email === email)) {
+                showAuthMessage('Email already registered', 'error');
+                return;
+            }
+            
+            // Create new user
+            const newUser = {
+                id: Date.now().toString(),
+                firstName,
+                lastName,
+                email,
+                password,
+                discord,
+                role,
+                createdAt: new Date().toISOString()
+            };
+            
+            // Add user to storage
+            users.push(newUser);
+            localStorage.setItem('uaeaf_users', JSON.stringify(users));
+            
+            // Show success message
+            showAuthMessage('Registration successful! Please login.', 'success');
+            
+            // Switch to login tab
+            tabBtns.forEach(b => b.classList.remove('active'));
+            authTabs.forEach(tab => tab.classList.remove('active'));
+            document.querySelector('.tab-btn[data-tab="login"]').classList.add('active');
+            document.getElementById('login').classList.add('active');
+            
+            // Reset form
+            registerForm.reset();
+        });
+    }
+    
+    // Forgot Password Handling
+    const forgotPasswordLink = document.querySelector('.forgot-password');
+    if (forgotPasswordLink) {
+        forgotPasswordLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const email = prompt('Enter your email to reset password:');
+            if (email) {
+                // Get users from local storage
+                const users = JSON.parse(localStorage.getItem('uaeaf_users') || '[]');
+                
+                // Find user
+                const user = users.find(u => u.email === email);
+                
+                if (user) {
+                    showAuthMessage('Password reset instructions sent to your email', 'success');
+                } else {
+                    showAuthMessage('Email not found', 'error');
+                }
+            }
+        });
+    }
+}
+
+// Show Auth Message
+function showAuthMessage(message, type) {
+    // Create message element
+    const messageElement = document.createElement('div');
+    messageElement.className = `auth-message ${type}`;
+    messageElement.textContent = message;
+    
+    // Add to auth container
+    const authContainer = document.querySelector('.auth-container');
+    if (authContainer) {
+        authContainer.appendChild(messageElement);
+        
+        // Remove after 3 seconds
+        setTimeout(() => {
+            messageElement.remove();
+        }, 3000);
+    }
+}
+
+// Check User Session
+function checkUserSession() {
+    const session = localStorage.getItem('uaeaf_session') || sessionStorage.getItem('uaeaf_session');
+    return session ? JSON.parse(session) : null;
+}
+
+// Update Navigation Based on Session
+function updateNavigation() {
+    const session = checkUserSession();
+    const authBtn = document.querySelector('.auth-btn');
+    
+    if (authBtn) {
+        if (session) {
+            authBtn.textContent = `Welcome, ${session.firstName}`;
+            authBtn.href = '#';
+            authBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (confirm('Logout?')) {
+                    localStorage.removeItem('uaeaf_session');
+                    sessionStorage.removeItem('uaeaf_session');
+                    window.location.reload();
+                }
+            });
+        } else {
+            authBtn.textContent = 'Login/Register';
+            authBtn.href = 'auth.html';
+        }
+    }
+}
+
+// Call authentication functions
+if (document.querySelector('.auth')) {
+    initAuth();
+}
+
+// Check session on every page
+updateNavigation();
+
 // Analytics Tracking (if needed)
 function trackEvent(category, action, label) {
     // Example analytics tracking
